@@ -5,11 +5,12 @@ services:
     container_name: EDCB-Wine
     build:
       context: .
-    # OS 起動時にコンテナを自動起動する
     restart: always
-    # ネットワークをホスト側と共有する
-    # 標準の bridge モード (仮想ネットワーク) だと localhost との通信が面倒
-    network_mode: host
+    ports:
+      - "4510:4510/tcp" # EDCB TCP API
+      - "5510:5510/tcp" # EpgTimerSrv.exe HTTP Server
+      - "6510:6510" # VNC for Browser
+      - "6511:6511" # VNC for VNC Viewer
     # Xfce のデスクトップ環境はなぜか特権モードでないと正常に動作しない
     privileged: true
     # ボリュームのマウント設定
